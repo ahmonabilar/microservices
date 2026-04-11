@@ -1,0 +1,22 @@
+sqlserver:
+  enabled: true
+  image:
+    repository: mcr.microsoft.com/mssql/server
+    tag: 2022-latest
+  service:
+    type: ClusterIP
+    port: 1433
+  persistence:
+    enabled: true
+
+rabbitmq:
+  enabled: true
+  image:
+    repository: rabbitmq
+    tag: 3.11-management
+  service:
+    type: ClusterIP
+    port: 5672
+    managementPort: 15672
+  persistence:
+    enabled: true

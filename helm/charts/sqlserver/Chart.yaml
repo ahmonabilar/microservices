@@ -1,0 +1,11 @@
+apiVersion: v2
+name: sqlserver
+description: A Helm chart for deploying SQL Server to Minikube
+type: application
+version: 0.1.0
+appVersion: "2022-latest"
+keywords:
+  - sqlserver
+  - database
+  - mssql
+  - minikube

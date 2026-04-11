@@ -1,0 +1,2 @@
+- minikube start -p abilar
+- kubectl config use-context abilar

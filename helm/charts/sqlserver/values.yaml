@@ -1,0 +1,35 @@
+replicaCount: 1
+
+image:
+  repository: mcr.microsoft.com/mssql/server
+  tag: 2022-latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 1433
+
+resources:
+  requests:
+    cpu: 500m
+    memory: 1Gi
+  limits:
+    cpu: 1
+    memory: 2Gi
+
+persistence:
+  enabled: true
+  accessMode: ReadWriteOnce
+  size: 8Gi
+  storageClass: ""
+
+env:
+  ACCEPT_EULA: "Y"
+  MSSQL_PID: "Developer"
+  SA_PASSWORD: "P@ssw0rd1234"
+  existingSecret: ""
+
+securityContext:
+  enabled: true
+  runAsUser: 1000
+  fsGroup: 1000

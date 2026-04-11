@@ -1,0 +1,9 @@
+dependencies:
+- name: sqlserver
+  repository: file://charts/sqlserver
+  version: 0.1.0
+- name: rabbitmq
+  repository: file://charts/rabbitmq
+  version: 0.1.0
+digest: sha256:7f22fb4b0259f265197b591818a336549bc4b97940e6dd37f8f94531d3b0fb1c
+generated: "2026-04-10T05:19:19.9690852+01:00"

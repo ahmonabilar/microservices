@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "sqlserver.fullname" . }}
+  labels:
+    app: {{ include "sqlserver.fullname" . }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ include "sqlserver.fullname" . }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "sqlserver.fullname" . }}
+    spec:
+      securityContext:
+        runAsUser: {{ .Values.securityContext.runAsUser }}
+        fsGroup: {{ .Values.securityContext.fsGroup }}
+      containers:
+        - name: sqlserver
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: 1433
+              name: tcp
+          env:
+            - name: ACCEPT_EULA
+              value: "{{ .Values.env.ACCEPT_EULA }}"
+            - name: MSSQL_PID
+              value: "{{ .Values.env.MSSQL_PID }}"
+            {{- if .Values.env.existingSecret }}
+            - name: SA_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.env.existingSecret }}
+                  key: SA_PASSWORD
+            {{- else }}
+            - name: SA_PASSWORD
+              value: "{{ .Values.env.SA_PASSWORD }}"
+            {{- end }}
+          readinessProbe:
+            tcpSocket:
+              port: 1433
+            initialDelaySeconds: 30
+            periodSeconds: 15
+            failureThreshold: 3
+          livenessProbe:
+            tcpSocket:
+              port: 1433
+            initialDelaySeconds: 60
+            periodSeconds: 20
+            failureThreshold: 5
+          volumeMounts:
+            - name: data
+              mountPath: /var/opt/mssql
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: {{ include "sqlserver.fullname" . }}-pvc

@@ -1,0 +1,35 @@
+replicaCount: 1
+
+image:
+  repository: rabbitmq
+  tag: 3.11-management
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 5672
+  managementPort: 15672
+
+resources:
+  requests:
+    cpu: 250m
+    memory: 512Mi
+  limits:
+    cpu: 500m
+    memory: 1Gi
+
+persistence:
+  enabled: true
+  accessMode: ReadWriteOnce
+  size: 8Gi
+  storageClass: ""
+
+env:
+  RABBITMQ_DEFAULT_USER: user
+  RABBITMQ_DEFAULT_PASS: password
+  RABBITMQ_DEFAULT_VHOST: "/"
+
+securityContext:
+  enabled: true
+  runAsUser: 1000
+  fsGroup: 1000

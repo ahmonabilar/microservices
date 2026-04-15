@@ -66,6 +66,7 @@
     <Folder Include="dbo\User Defined Types\" />
     <Folder Include="Security\" />
     <Folder Include="SalesLT\XMLSchemaCollections\" />
+    <Folder Include="SalesLT\StoredProcedures" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\ErrorLog.sql" />
@@ -97,7 +98,6 @@
     <Build Include="Security\SalesLT.sql" />
     <Build Include="SalesLT\XMLSchemaCollections\ProductDescriptionSchemaCollection.sql" />
     <Build Include="ExtendedProperties.sql" />
-    <Build Include="sp_GetAllCustomers.sql" />
-    <Build Include="dbo\Stored Procedures\sp_GetAllCustomers.sql" />
+    <Build Include="SalesLT\StoredProcedures\sp_GetAllCustomers.sql" />
   </ItemGroup>
 </Project>

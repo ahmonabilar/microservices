@@ -1,20 +1,20 @@
+using System.Data;
 using MassTransit;
 using Microsoft.Data.SqlClient;
 using Sales.DataAccess.Repositories;
 using Sales.Services;
-using System.Data;
 
 var builder = WebApplication.CreateBuilder(args);
+var config = builder.Configuration;
 
 // Add services to the container.
-
 builder.Services.AddScoped<ICustomerService, CustomerService>();
 builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
-builder.Services.AddScoped<IDbConnection>(sp =>
-    new SqlConnection("Server=127.0.0.1,1433;Database=AdventureWorksLT2022;User ID=sa;Password=P@ssw0rd1234;TrustServerCertificate=True;"
-        ?? throw new InvalidOperationException("Connection string 'SalesDb' not found.")));
+builder.Services.AddScoped<IDbConnection>(sp => new SqlConnection(
+    config.GetValue<string>("ConnectionStrings:SalesDb")
+        ?? throw new InvalidOperationException("Connection string 'SalesDb' not found.")
+));
 
-//"Data Source=127.0.0.1,1433;Persist Security Info=True;User ID=sa;Pooling=False;Multiple Active Result Sets=False;Connect Timeout=60;Encrypt=True;Trust Server Certificate=True;Command Timeout=0"
 builder.Services.AddMassTransit(conf =>
 {
     conf.SetKebabCaseEndpointNameFormatter();
@@ -24,17 +24,32 @@ builder.Services.AddMassTransit(conf =>
 
     conf.AddConsumers(assembly);
 
-    conf.UsingRabbitMq((ctx, cfg) =>
-    {
-        cfg.Host("rabbitmq://localhost", h => {
-            h.Username("user");
-            h.Password("password");
-        });
+    conf.UsingRabbitMq(
+        (ctx, cfg) =>
+        {
+            cfg.Host(
+                config.GetValue<string>("RabbitMQ:Host"),
+                h =>
+                {
+                    h.Username(
+                        config.GetValue<string>("RabbitMQ:Username")
+                            ?? throw new InvalidOperationException(
+                                "Configuration 'RabbitMQ:Username' not found."
+                            )
+                    );
+                    h.Password(
+                        config.GetValue<string>("RabbitMQ:Password")
+                            ?? throw new InvalidOperationException(
+                                "Configuration 'RabbitMQ:Password' not found."
+                            )
+                    );
+                }
+            );
 
-        cfg.ConfigureEndpoints(ctx);
-    });
+            cfg.ConfigureEndpoints(ctx);
+        }
+    );
 });
-
 
 var app = builder.Build();
 
@@ -42,9 +57,12 @@ var app = builder.Build();
 
 app.UseHttpsRedirection();
 
-app.MapGet("/", () =>
-{
-    return "Employee service started.";
-});
+app.MapGet(
+    "/",
+    () =>
+    {
+        return "Sales service started.";
+    }
+);
 
 app.Run();

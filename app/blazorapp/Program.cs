@@ -1,10 +1,33 @@
 using blazorapp.Components;
+using blazorapp.Connectors;
+using blazorapp.Interfaces;
+using blazorapp.Services;
+using MassTransit;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
+
+// Configure HttpClient for the sales service
+builder.Services.AddHttpClient();
+
+// Register customer client service
+builder.Services.AddScoped<ICustomerClient, CustomerClient>();
+builder.Services.AddScoped<IMessageBusConnector, MessageBusConnector>();
+
+
+builder.Services.AddMassTransit(conf =>
+{
+    conf.UsingRabbitMq((ctx, cfg) =>
+    {
+        cfg.Host("localhost", "/", h => {
+            h.Username("user");
+            h.Password("password");
+        });
+    });
+});
 
 var app = builder.Build();
 

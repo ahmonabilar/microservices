@@ -1,2 +1,13 @@
 - minikube start -p abilar
 - kubectl config use-context abilar
+
+########################
+DEPLOY
+########################
+- helm dependency update helm
+- helm upgrade --install microservices helm --create-namespace --namespace microservices
+
+#######################
+DELETE namespace
+#######################
+- kubectl delete namespace microservices

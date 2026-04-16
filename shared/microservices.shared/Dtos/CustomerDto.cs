@@ -1,4 +1,4 @@
-namespace microservices.Messages;
+﻿namespace microservices.shared.Dtos;
 
 public record CustomerDto
 {
@@ -8,9 +8,4 @@ public record CustomerDto
     public string? CompanyName { get; init; }
     public string? Email { get; init; }
     public string? Phone { get; init; }
-}
-
-public record GetAllCustomerSuccess
-{
-    public List<CustomerDto> Customers { get; init; } = new();
 }

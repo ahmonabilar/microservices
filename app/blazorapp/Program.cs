@@ -1,8 +1,7 @@
 using blazorapp.Components;
-using blazorapp.Connectors;
-using blazorapp.Interfaces;
 using blazorapp.Services;
 using MassTransit;
+using microservices.shared.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,7 +14,7 @@ builder.Services.AddHttpClient();
 
 // Register customer client service
 builder.Services.AddScoped<ICustomerClient, CustomerClient>();
-builder.Services.AddScoped<IMessageBusConnector, MessageBusConnector>();
+builder.Services.RegisterShared();
 
 
 builder.Services.AddMassTransit(conf =>

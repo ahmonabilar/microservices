@@ -1,6 +1,7 @@
 @page "/customers"
 @attribute [StreamRendering]
 @using blazorapp.Services
+@using microservices.shared.Dtos
 @inject ICustomerClient CustomerClient
 
 <PageTitle>Customers</PageTitle>
@@ -47,7 +48,7 @@ else
 }
 
 @code {
-    private List<microservices.Messages.CustomerDto>? customers;
+    private List<CustomerDto>? customers;
     private bool isLoading = true;
 
     protected override async Task OnInitializedAsync()

@@ -1,4 +1,4 @@
-namespace microservices.Messages;
+﻿namespace microservices.shared.Messages;
 
 public record GetAllCustomerFailure
 {

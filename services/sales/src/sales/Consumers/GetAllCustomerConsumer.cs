@@ -1,6 +1,6 @@
 using MassTransit;
-using microservices.Messages;
-using Microsoft.Extensions.Logging;
+using microservices.shared.Dtos;
+using microservices.shared.Messages;
 using Sales.Services;
 
 namespace Sales.Consumers;
@@ -10,9 +10,13 @@ public class GetAllCustomerConsumer : IConsumer<GetAllCustomer>
     private readonly ICustomerService _customerService;
     private readonly ILogger<GetAllCustomerConsumer> _logger;
 
-    public GetAllCustomerConsumer(ICustomerService customerService, ILogger<GetAllCustomerConsumer> logger)
+    public GetAllCustomerConsumer(
+        ICustomerService customerService,
+        ILogger<GetAllCustomerConsumer> logger
+    )
     {
-        _customerService = customerService ?? throw new ArgumentNullException(nameof(customerService));
+        _customerService =
+            customerService ?? throw new ArgumentNullException(nameof(customerService));
         _logger = logger ?? throw new ArgumentNullException(nameof(logger));
     }
 
@@ -32,18 +36,18 @@ public class GetAllCustomerConsumer : IConsumer<GetAllCustomer>
                     LastName = c.LastName,
                     CompanyName = c.CompanyName,
                     Email = c.Email,
-                    Phone = c.Phone
+                    Phone = c.Phone,
                 })
                 .ToList();
 
-            var response = new GetAllCustomerSuccess
-            {
-                Customers = customerDtos
-            };
+            var response = new GetAllCustomerSuccess { Customers = customerDtos };
 
             await context.RespondAsync(response);
 
-            _logger.LogInformation("GetAllCustomer request processed successfully. Found {CustomerCount} customers", customerDtos.Count);
+            _logger.LogInformation(
+                "GetAllCustomer request processed successfully. Found {CustomerCount} customers",
+                customerDtos.Count
+            );
         }
         catch (Exception ex)
         {
@@ -52,7 +56,7 @@ public class GetAllCustomerConsumer : IConsumer<GetAllCustomer>
             var failureResponse = new GetAllCustomerFailure
             {
                 ErrorMessage = "An error occurred while retrieving customers",
-                ErrorCode = "INTERNAL_ERROR"
+                ErrorCode = "INTERNAL_ERROR",
             };
 
             await context.RespondAsync(failureResponse);

@@ -1,6 +1,5 @@
-using blazorapp.Interfaces;
-using microservices.Messages;
-using System.Text.Json;
+using microservices.shared.Interfaces;
+using microservices.shared.Messages;
 
 namespace blazorapp.Services;
 
@@ -13,15 +12,11 @@ public class CustomerClient : ICustomerClient
 {
     private readonly IMessageBusConnector _messageBusConnector;
 
-    private readonly HttpClient _httpClient;
     private readonly ILogger<CustomerClient> _logger;
-    private readonly IConfiguration _configuration;
 
-    public CustomerClient(IMessageBusConnector messageBusConnector, HttpClient httpClient, ILogger<CustomerClient> logger, IConfiguration configuration)
+    public CustomerClient(IMessageBusConnector messageBusConnector, ILogger<CustomerClient> logger)
     {
-        _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
         _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-        _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
         _messageBusConnector = messageBusConnector ?? throw new ArgumentNullException(nameof(messageBusConnector));
     }
 
@@ -47,19 +42,4 @@ public class CustomerClient : ICustomerClient
             return null;
         }
     }
-}
-
-public class HelloMessage
-{
-    public string Text { get; set; }
-}
-
-public class HelloMessageSuccess
-{
-    public string SuccessMessage { get; set; }
-}
-
-public class HelloMessageFailure
-{
-    public string Reason { get; set; }
 }

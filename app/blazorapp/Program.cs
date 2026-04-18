@@ -20,7 +20,7 @@ builder.Services
     .AddOpenIdConnect(options =>
     {
         options.Authority = "https://localhost:5003";
-        options.ClientId = "web_client";
+        options.ClientId = "blazorapp_client";
         options.ResponseType = "code";
         options.SaveTokens = true;
         options.GetClaimsFromUserInfoEndpoint = true;

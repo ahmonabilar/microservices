@@ -16,7 +16,7 @@ builder
         options =>
         {
             options.Authority = "https://localhost:5003"; // your OpenIddict server
-            options.ClientId = "web_client";
+            options.ClientId = "identity_client";
 
             options.ResponseType = "code";
 

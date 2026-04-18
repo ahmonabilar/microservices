@@ -2,7 +2,7 @@
 @attribute [StreamRendering]
 @using blazorapp.Services
 @using microservices.shared.Dtos
-@inject ICustomerClient CustomerClient
+@inject ICustomerService CustomerClient
 
 <PageTitle>Customers</PageTitle>
 
@@ -55,11 +55,7 @@ else
     {
         try
         {
-            var result = await CustomerClient.GetAllCustomersAsync();
-            if (result != null)
-            {
-                customers = result.Customers;
-            }
+            customers = await CustomerClient.GetAllCustomersAsync();
         }
         finally
         {

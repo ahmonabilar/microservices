@@ -1,31 +1,15 @@
 using blazorapp.Components;
 using blazorapp.Services;
-using MassTransit;
-using microservices.shared.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddRazorComponents()
-    .AddInteractiveServerComponents();
+builder.Services.AddRazorComponents().AddInteractiveServerComponents();
 
-// Configure HttpClient for the sales service
-builder.Services.AddHttpClient();
-
-// Register customer client service
-builder.Services.AddScoped<ICustomerClient, CustomerClient>();
-builder.Services.RegisterShared();
-
-
-builder.Services.AddMassTransit(conf =>
+// Configure HttpClient for the gateway service
+builder.Services.AddHttpClient<ICustomerService, CustomerService>(client =>
 {
-    conf.UsingRabbitMq((ctx, cfg) =>
-    {
-        cfg.Host("localhost", "/", h => {
-            h.Username("user");
-            h.Password("password");
-        });
-    });
+    client.BaseAddress = new Uri("http://localhost:5086");
 });
 
 var app = builder.Build();
@@ -43,7 +27,6 @@ app.UseHttpsRedirection();
 app.UseAntiforgery();
 
 app.MapStaticAssets();
-app.MapRazorComponents<App>()
-    .AddInteractiveServerRenderMode();
+app.MapRazorComponents<App>().AddInteractiveServerRenderMode();
 
 app.Run();

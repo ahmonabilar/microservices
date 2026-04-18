@@ -1,6 +1,7 @@
 using blazorapp.gateway.Connectors;
 using blazorapp.gateway.Services;
 using MassTransit;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using microservices.shared.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,6 +11,20 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+
+// Configure JWT Bearer authentication
+builder.Services
+    .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.Authority = "https://localhost:5003";
+        options.RequireHttpsMetadata = false;
+        options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+        {
+            ValidateAudience = false,
+        };
+    });
+builder.Services.AddAuthorization();
 
 // Register shared services and connectors
 builder.Services.RegisterShared();
@@ -38,6 +53,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

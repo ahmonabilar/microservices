@@ -1,9 +1,11 @@
 using blazorapp.gateway.Services;
 using microservices.shared.Dtos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace blazorapp.gateway.Controllers;
 
+[Authorize]
 [ApiController]
 [Route("[controller]")]
 public class CustomerController : ControllerBase

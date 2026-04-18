@@ -1,5 +1,6 @@
 @page "/customers"
 @attribute [StreamRendering]
+@attribute [Authorize]
 @using blazorapp.Services
 @using microservices.shared.Dtos
 @inject ICustomerService CustomerClient

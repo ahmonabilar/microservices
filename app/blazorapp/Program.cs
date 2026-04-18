@@ -1,15 +1,44 @@
 using blazorapp.Components;
 using blazorapp.Services;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorComponents().AddInteractiveServerComponents();
 
+// Configure authentication
+builder.Services
+    .AddAuthentication(options =>
+    {
+        options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+        options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
+    })
+    .AddCookie()
+    .AddOpenIdConnect(options =>
+    {
+        options.Authority = "https://localhost:5003";
+        options.ClientId = "web_client";
+        options.ResponseType = "code";
+        options.SaveTokens = true;
+        options.GetClaimsFromUserInfoEndpoint = true;
+        options.UsePkce = true;
+        options.RequireHttpsMetadata = false;
+        options.Scope.Add("api");
+        options.Scope.Add("offline_access");
+    });
+
+builder.Services.AddAuthorization();
+builder.Services.AddCascadingAuthenticationState();
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<TokenProvider>();
+
 // Configure HttpClient for the gateway service
 builder.Services.AddHttpClient<ICustomerService, CustomerService>(client =>
 {
-    client.BaseAddress = new Uri("http://localhost:5086");
+    client.BaseAddress = new Uri("https://localhost:7062");
 });
 
 var app = builder.Build();
@@ -24,7 +53,52 @@ if (!app.Environment.IsDevelopment())
 app.UseStatusCodePagesWithReExecute("/not-found", createScopeForStatusCodePages: true);
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
+app.UseAuthorization();
+
+// Initialize TokenProvider from authentication cookie on each request
+app.Use(async (context, next) =>
+{
+    if (context.User.Identity?.IsAuthenticated == true)
+    {
+        var tokenProvider = context.RequestServices.GetRequiredService<TokenProvider>();
+        var accessToken = await context.GetTokenAsync("access_token");
+        var refreshToken = await context.GetTokenAsync("refresh_token");
+        var expiresAtStr = await context.GetTokenAsync("expires_at");
+        var expiresAt = DateTimeOffset.TryParse(expiresAtStr, out var exp)
+            ? exp
+            : DateTimeOffset.MinValue;
+
+        tokenProvider.Initialize(accessToken, refreshToken, expiresAt);
+    }
+    await next(context);
+});
+
 app.UseAntiforgery();
+
+// Auth endpoints
+app.MapGet(
+    "/account/login",
+    async (HttpContext context, string? returnUrl) =>
+    {
+        await context.ChallengeAsync(
+            OpenIdConnectDefaults.AuthenticationScheme,
+            new AuthenticationProperties { RedirectUri = returnUrl ?? "/" }
+        );
+    }
+);
+
+app.MapGet(
+    "/account/logout",
+    async (HttpContext context) =>
+    {
+        await context.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+        await context.SignOutAsync(
+            OpenIdConnectDefaults.AuthenticationScheme,
+            new AuthenticationProperties { RedirectUri = "/" }
+        );
+    }
+);
 
 app.MapStaticAssets();
 app.MapRazorComponents<App>().AddInteractiveServerRenderMode();

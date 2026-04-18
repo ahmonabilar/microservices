@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "sales.fullname" . }}
+  labels:
+    app: {{ include "sales.fullname" . }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ include "sales.fullname" . }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "sales.fullname" . }}
+    spec:
+      containers:
+        - name: sales
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.service.targetPort }}
+              name: http
+          env:
+            - name: ASPNETCORE_ENVIRONMENT
+              value: "{{ .Values.env.ASPNETCORE_ENVIRONMENT }}"
+            - name: ASPNETCORE_URLS
+              value: "{{ .Values.env.ASPNETCORE_URLS }}"
+            - name: ConnectionStrings__SalesDb
+              value: "{{ index .Values.env "ConnectionStrings__SalesDb" }}"
+            - name: RabbitMQ__Host
+              value: "{{ index .Values.env "RabbitMQ__Host" }}"
+            - name: RabbitMQ__Username
+              value: "{{ index .Values.env "RabbitMQ__Username" }}"
+            - name: RabbitMQ__Password
+              value: "{{ index .Values.env "RabbitMQ__Password" }}"
+          readinessProbe:
+            httpGet:
+              path: /
+              port: {{ .Values.service.targetPort }}
+            initialDelaySeconds: 15
+            periodSeconds: 10
+            failureThreshold: 3
+          livenessProbe:
+            httpGet:
+              path: /
+              port: {{ .Values.service.targetPort }}
+            initialDelaySeconds: 30
+            periodSeconds: 15
+            failureThreshold: 5

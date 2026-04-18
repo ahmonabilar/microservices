@@ -20,3 +20,13 @@ rabbitmq:
     managementPort: 15672
   persistence:
     enabled: true
+
+sales:
+  enabled: true
+  image:
+    repository: sales
+    tag: latest
+  service:
+    type: ClusterIP
+    port: 80
+    targetPort: 8080

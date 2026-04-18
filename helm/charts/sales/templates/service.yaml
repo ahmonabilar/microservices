@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: '{{ include "sales.fullname" . }}'
+  labels:
+    app: '{{ include "sales.fullname" . }}'
+spec:
+  type: "{{ .Values.service.type }}"
+  selector:
+    app: '{{ include "sales.fullname" . }}'
+  ports:
+    - name: http
+      port: {{ .Values.service.port }}
+      targetPort: {{ .Values.service.targetPort }}

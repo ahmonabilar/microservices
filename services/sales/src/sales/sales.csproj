@@ -7,9 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MassTransit" Version="9.1.0" />
+    <PackageReference Include="MassTransit" Version="8.3.6" />
     <PackageReference Include="Dapper" Version="2.1.15" />
-    <PackageReference Include="MassTransit.RabbitMQ" Version="9.1.0" />
+    <PackageReference Include="MassTransit.RabbitMQ" Version="8.3.6" />
     <PackageReference Include="microservices.shared" Version="1.0.0" />
     <PackageReference Include="Microsoft.Data.SqlClient" Version="5.2.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="10.0.0" />
@@ -19,6 +19,12 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="7.0.0" />
     <PackageReference Include="Azure.Identity" Version="1.11.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="microservices.shared">
+      <HintPath>..\..\..\..\shared\microservices.shared\bin\Debug\net10.0\microservices.shared.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

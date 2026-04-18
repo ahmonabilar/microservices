@@ -1,0 +1,28 @@
+replicaCount: 1
+
+image:
+  repository: sales
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 8080
+
+resources:
+  requests:
+    cpu: 250m
+    memory: 256Mi
+  limits:
+    cpu: 500m
+    memory: 512Mi
+
+env:
+  ASPNETCORE_ENVIRONMENT: "Production"
+  ASPNETCORE_URLS: "http://+:8080"
+  ConnectionStrings__SalesDb: "Server=sqlserver,1433;Database=AdventureWorksLT202\
+    2;User ID=sa;Password=P@ssw0rd1234;TrustServerCertificate=True;"
+  RabbitMQ__Host: "rabbitmq://rabbitmq"
+  RabbitMQ__Username: "user"
+  RabbitMQ__Password: "password"

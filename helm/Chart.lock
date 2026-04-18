@@ -5,5 +5,8 @@ dependencies:
 - name: rabbitmq
   repository: file://charts/rabbitmq
   version: 0.1.0
-digest: sha256:7f22fb4b0259f265197b591818a336549bc4b97940e6dd37f8f94531d3b0fb1c
-generated: "2026-04-10T05:19:19.9690852+01:00"
+- name: sales
+  repository: file://charts/sales
+  version: 0.1.0
+digest: sha256:b37a5ce4dcd405b1cf20e11f3b809a19689c960fa1dc7c3ff9e2a6b0372542e4
+generated: "2026-04-18T21:54:27.2368739+01:00"

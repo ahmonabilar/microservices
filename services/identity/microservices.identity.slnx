@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/microservice.identity.client/microservice.identity.client.csproj" />
+  <Project Path="src/microservices.identity.OpenIddict/microservices.identity.OpenIddict.csproj" />
+</Solution>

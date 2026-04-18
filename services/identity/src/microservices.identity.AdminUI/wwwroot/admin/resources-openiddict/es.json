@@ -1,0 +1,41 @@
+{
+  "Permission": {
+    "UserManager": "User Manager",
+    "UserManagerReadOnly": "User Manager Read Only",
+    "Auditer": "Auditer",
+    "All": "All",
+    "AllReadOnly": "All Read Only",
+    "AuthorizationServerManager": "OpenIddict Manager",
+    "AuthorizationServerManagerReadOnly": "OpenIddict Manager Read Only"
+  },
+  "ServerDependent": {
+    "LandingPage": {
+      "IntroParagraph1": "La principal herramienta de gestión de usuarios y configuraciones para OpenIddict.",
+      "IdentityServerError": "No se puede contactar con OpenIddict{{error}}. Más ayuda puede encontrarse <a href='{{link}}' target='_blank'>aquí</a>."
+    },
+    "Users": {
+      "Applications": {
+        "Access": "Aplicaciones a las que el usuario ha dado su consentimiento o que actualmente tienen tokens de OpenIddict.",
+        "DataEncrypted": "Los ámbitos pueden no aparecer aquí debido a la configuración de protección de datos de OpenIddict"
+      }
+    },
+    "UserDetails": {
+      "EnabledTwoFactorHelp": "Dependiendo de tu implementación de OpenIddict, esto puede no tener ningún efecto"
+    },
+    "Notifications": {
+      "Support": "Envíanos un mensaje a support@openiddictcomponents.com para obtener más ayuda"
+    },
+    "InitialAdminCreation": {
+      "LoginMessage": "Ahora puedes iniciar sesión en AdminUI y gestionar tu solución OpenIddict."
+    },
+    "Clients": {
+      "EnableLocalLoginHelp": "Permitir credenciales locales en OpenIddict (p. ej., nombre de usuario y contraseña)",
+      "Saml": {
+        "RequireRequestDestinationHelp": "Las solicitudes entrantes requieren un destino para que OpenIddict pueda confirmar que es el destinatario previsto",
+        "SignAssertionsHelp": "Hace que OpenIddict firme tanto los mensajes SAML como las afirmaciones (recomendado)",
+        "EncryptAssertionsHelp": "Hace que OpenIddict encripte las afirmaciones enviadas al Proveedor de Servicios, utilizando su clave pública",
+        "RequireSignedArtifactResponsesHelp": "Hace que OpenIddict firme las Respuestas de Artefacto para el proveedor de servicios"
+      }
+    }
+  }
+}

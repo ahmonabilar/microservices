@@ -1,0 +1,41 @@
+{
+  "Permission": {
+    "UserManager": "User Manager",
+    "UserManagerReadOnly": "User Manager Read Only",
+    "Auditer": "Auditer",
+    "All": "All",
+    "AllReadOnly": "All Read Only",
+    "AuthorizationServerManager": "OpenIddict Manager",
+    "AuthorizationServerManagerReadOnly": "OpenIddict Manager Read Only"
+  },
+  "ServerDependent": {
+    "LandingPage": {
+      "IntroParagraph1": "The leading user and configuration management tool for OpenIddict.",
+      "IdentityServerError": "Unable to contact OpenIddict{{error}}. More help can be found <a href='{{link}}' target='_blank'>here</a>."
+    },
+    "Users": {
+      "Applications": {
+        "Access": "Applications the user has given consent to or currently has OpenIddict side tokens for:",
+        "DataEncrypted": "Scopes may not show here due to OpenIddict data protection configuration"
+      }
+    },
+    "UserDetails": {
+      "EnabledTwoFactorHelp": "Depending on your OpenIddict implementation, this may not have any effect"
+    },
+    "Notifications": {
+      "Support": "Message Us At support@openiddictcomponents.com For More Assistance"
+    },
+    "InitialAdminCreation": {
+      "LoginMessage": "You can now log into AdminUI and manage your OpenIddict solution."
+    },
+    "Clients": {
+      "EnableLocalLoginHelp": "Allow OpenIddict local credentials (e.g. username and password)",
+      "Saml": {
+        "RequireRequestDestinationHelp": "Incoming requests require a destination so OpenIddict can confirm it is the intended recipient",
+        "SignAssertionsHelp": "Makes OpenIddict sign both SAML messages and assertions (recommended)",
+        "EncryptAssertionsHelp": "Makes OpenIddict encrypt assertions sent to the Service Provider, using their public key",
+        "RequireSignedArtifactResponsesHelp": "Makes OpenIddict sign Artifact Responses to the service provider"
+      }
+    }
+  }
+}

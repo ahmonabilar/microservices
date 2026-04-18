@@ -1,0 +1,41 @@
+{
+  "Permission": {
+    "UserManager": "User Manager",
+    "UserManagerReadOnly": "User Manager Read Only",
+    "Auditer": "Auditer",
+    "All": "All",
+    "AllReadOnly": "All Read Only",
+    "AuthorizationServerManager": "OpenIddict Manager",
+    "AuthorizationServerManagerReadOnly": "OpenIddict Manager Read Only"
+  },
+  "ServerDependent": {
+    "LandingPage": {
+      "IntroParagraph1": "OpenIddict 的领先用户和配置管理工具。",
+      "IdentityServerError": "无法联系 OpenIddict{{error}}。更多帮助请访问 <a href='{{link}}' target='_blank'>这里</a>。"
+    },
+    "Users": {
+      "Applications": {
+        "Access": "用户已同意的应用程序或当前拥有 OpenIddict 侧边令牌的应用程序。",
+        "DataEncrypted": "由于 OpenIddict 数据保护配置，某些范围可能无法显示"
+      }
+    },
+    "UserDetails": {
+      "EnabledTwoFactorHelp": "根据您的 OpenIddict 实现，这可能不会产生任何效果"
+    },
+    "Notifications": {
+      "Support": "请通过 support@openiddictcomponents.com 联系我们以获得更多帮助"
+    },
+    "InitialAdminCreation": {
+      "LoginMessage": "您现在可以登录 AdminUI 并管理您的 OpenIddict 解决方案。"
+    },
+    "Clients": {
+      "EnableLocalLoginHelp": "允许 OpenIddict 本地凭据（如用户名和密码）",
+      "Saml": {
+        "RequireRequestDestinationHelp": "传入请求需要一个目标，以便 OpenIddict 可以确认其为预定接收方",
+        "SignAssertionsHelp": "使 OpenIddict 签署 SAML 消息和断言（推荐）",
+        "EncryptAssertionsHelp": "使 OpenIddict 使用服务提供商的公钥加密发送给服务提供商的断言",
+        "RequireSignedArtifactResponsesHelp": "使 OpenIddict 签署发送给服务提供商的 Artifact 响应"
+      }
+    }
+  }
+}

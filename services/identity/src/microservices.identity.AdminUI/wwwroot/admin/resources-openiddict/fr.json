@@ -1,0 +1,41 @@
+{
+  "Permission": {
+    "UserManager": "User Manager",
+    "UserManagerReadOnly": "User Manager Read Only",
+    "Auditer": "Auditer",
+    "All": "All",
+    "AllReadOnly": "All Read Only",
+    "AuthorizationServerManager": "OpenIddict Manager",
+    "AuthorizationServerManagerReadOnly": "OpenIddict Manager Read Only"
+  },
+  "ServerDependent": {
+    "LandingPage": {
+      "IntroParagraph1": "L'outil principal de gestion des utilisateurs et des configurations pour OpenIddict.",
+      "IdentityServerError": "Impossible de contacter OpenIddict{{error}}. Plus d'aide peut être trouvée <a href='{{link}}' target='_blank'>ici</a>."
+    },
+    "Users": {
+      "Applications": {
+        "Access": "Applications auxquelles l'utilisateur a donné son consentement ou pour lesquelles il a actuellement des tokens OpenIddict.",
+        "DataEncrypted": "Les portées peuvent ne pas s'afficher ici en raison de la configuration de protection des données d'OpenIddict"
+      }
+    },
+    "UserDetails": {
+      "EnabledTwoFactorHelp": "En fonction de votre implémentation d'OpenIddict, cela peut ne pas avoir d'effet"
+    },
+    "Notifications": {
+      "Support": "Envoyez-nous un message à support@openiddictcomponents.com pour plus d'assistance"
+    },
+    "InitialAdminCreation": {
+      "LoginMessage": "Vous pouvez maintenant vous connecter à AdminUI et gérer votre solution OpenIddict."
+    },
+    "Clients": {
+      "EnableLocalLoginHelp": "Autoriser la connexion locale (nom d’utilisateur et mot de passe)",
+      "Saml": {
+        "RequireRequestDestinationHelp": "Les requêtes entrantes nécessitent une destination pour qu'OpenIddict puisse confirmer qu'il en est le destinataire prévu",
+        "SignAssertionsHelp": "Fait en sorte qu'OpenIddict signe à la fois les messages SAML et les assertions (recommandé)",
+        "EncryptAssertionsHelp": "Fait en sorte qu'OpenIddict chiffre les assertions envoyées au fournisseur de services, en utilisant leur clé publique",
+        "RequireSignedArtifactResponsesHelp": "Fait en sorte qu'OpenIddict signe les réponses d'artefacts pour le fournisseur de services"
+      }
+    }
+  }
+}

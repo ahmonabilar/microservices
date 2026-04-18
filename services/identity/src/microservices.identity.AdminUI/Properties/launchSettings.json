@@ -1,0 +1,12 @@
+﻿{
+  "profiles": {
+    "microservices.identity.AdminUI": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "launchBrowser": true,
+      "applicationUrl": "https://localhost:5001;",
+      "environmentVariables": {
+      }
+    }
+  }
+}

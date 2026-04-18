@@ -1,0 +1,41 @@
+{
+  "Permission": {
+    "UserManager": "User Manager",
+    "UserManagerReadOnly": "User Manager Read Only",
+    "Auditer": "Auditer",
+    "All": "All",
+    "AllReadOnly": "All Read Only",
+    "AuthorizationServerManager": "OpenIddict Manager",
+    "AuthorizationServerManagerReadOnly": "OpenIddict Manager Read Only"
+  },
+  "ServerDependent": {
+    "LandingPage": {
+      "IntroParagraph1": "Das führende Werkzeug zur Benutzer- und Konfigurationsverwaltung für OpenIddict.",
+      "IdentityServerError": "Nicht möglich, OpenIddict{{error}} zu kontaktieren. Weitere Hilfe finden Sie <a href='{{link}}' target='_blank'>hier</a>."
+    },
+    "Users": {
+      "Applications": {
+        "Access": "Anwendungen, denen der Benutzer zugestimmt hat oder für die er derzeit OpenIddict-Seitentoken hat.",
+        "DataEncrypted": "Scopes werden hier möglicherweise nicht angezeigt aufgrund der Datenschutzkonfiguration von OpenIddict"
+      }
+    },
+    "UserDetails": {
+      "EnabledTwoFactorHelp": "Je nach Ihrer OpenIddict-Implementierung kann dies keine Auswirkungen haben"
+    },
+    "Notifications": {
+      "Support": "Kontaktieren Sie uns unter support@openiddictcomponents.com für weitere Unterstützung"
+    },
+    "InitialAdminCreation": {
+      "LoginMessage": "Sie können sich jetzt bei AdminUI anmelden und Ihre OpenIddict-Lösung verwalten."
+    },
+    "Clients": {
+      "EnableLocalLoginHelp": "Lokale Anmeldeinformationen in OpenIddict zulassen (z. B. Benutzername und Passwort)",
+      "Saml": {
+        "RequireRequestDestinationHelp": "Eingehende Anfragen erfordern ein Ziel, damit OpenIddict bestätigen kann, dass es der vorgesehene Empfänger ist",
+        "SignAssertionsHelp": "Lässt OpenIddict sowohl SAML-Nachrichten als auch Assertions signieren (empfohlen)",
+        "EncryptAssertionsHelp": "Lässt OpenIddict Assertions an den Dienstanbieter verschlüsseln, indem dessen öffentlicher Schlüssel verwendet wird",
+        "RequireSignedArtifactResponsesHelp": "Lässt OpenIddict die Artifact Responses an den Dienstanbieter signieren"
+      }
+    }
+  }
+}

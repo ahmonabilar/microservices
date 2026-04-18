@@ -1,0 +1,41 @@
+{
+  "Permission": {
+    "UserManager": "User Manager",
+    "UserManagerReadOnly": "User Manager Read Only",
+    "Auditer": "Auditer",
+    "All": "All",
+    "AllReadOnly": "All Read Only",
+    "AuthorizationServerManager": "OpenIddict Manager",
+    "AuthorizationServerManagerReadOnly": "OpenIddict Manager Read Only"
+  },
+  "ServerDependent": {
+    "LandingPage": {
+      "IntroParagraph1": "OpenIddict 的主要用戶和配置管理工具。",
+      "IdentityServerError": "無法聯繫 OpenIddict{{error}}。更多幫助請參見 <a href='{{link}}' target='_blank'>這裡</a>。"
+    },
+    "Users": {
+      "Applications": {
+        "Access": "用戶已同意的應用程式或目前擁有 OpenIddict 側邊令牌的應用程式。",
+        "DataEncrypted": "由於 OpenIddict 資料保護設定，某些範圍可能無法顯示"
+      }
+    },
+    "UserDetails": {
+      "EnabledTwoFactorHelp": "根據您的 OpenIddict 實作，這可能不會產生任何效果"
+    },
+    "Notifications": {
+      "Support": "請通過 support@openiddictcomponents.com 聯繫我們以獲取更多幫助"
+    },
+    "InitialAdminCreation": {
+      "LoginMessage": "您現在可以登入 AdminUI 並管理您的 OpenIddict 解決方案。"
+    },
+    "Clients": {
+      "EnableLocalLoginHelp": "允許 OpenIddict 本機認證（例如使用者名稱與密碼）",
+      "Saml": {
+        "RequireRequestDestinationHelp": "傳入請求需要一個目的地，以便 OpenIddict 可以確認它是預定的接收者",
+        "SignAssertionsHelp": "使 OpenIddict 簽署 SAML 訊息和斷言（推薦）",
+        "EncryptAssertionsHelp": "使 OpenIddict 使用服務提供者的公鑰加密發送給服務提供者的斷言",
+        "RequireSignedArtifactResponsesHelp": "使 OpenIddict 簽署發送給服務提供者的 Artifact 回應"
+      }
+    }
+  }
+}

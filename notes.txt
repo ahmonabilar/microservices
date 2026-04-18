@@ -1,6 +1,11 @@
 - minikube start -p abilar
 - kubectl config use-context abilar
 
+######################
+Add mydb.bak to sqlserver container
+######################
+- minikube mount C:\Projects\microservices\backup:/backup -p abilar
+
 ########################
 DEPLOY
 ########################
@@ -11,3 +16,10 @@ DEPLOY
 DELETE namespace
 #######################
 - kubectl delete namespace microservices
+
+###########################
+Identity migration commands
+###########################
+
+Username: Info@rocksolidknowledge.com
+Password: Password123!

@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "microservices.identity.OpenIddict": {
+      "commandName": "Project",
+      "environmentVariables": {
+      },
+      "applicationUrl": "https://localhost:5003"    }
+  }
+}
+

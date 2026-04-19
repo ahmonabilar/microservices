@@ -11,5 +11,8 @@ dependencies:
 - name: identity
   repository: file://charts/identity
   version: 0.1.0
-digest: sha256:6b70907fe1141a18301f4b892d8d118e2b6a9062a23ee413cdff2e52899f350f
-generated: "2026-04-19T13:35:38.7615259+01:00"
+- name: gateway
+  repository: file://charts/gateway
+  version: 0.1.0
+digest: sha256:24c36122568aaf25f4b3b31d429964ed5b435feab83dc44a1029ae5596c0e4ff
+generated: "2026-04-19T14:45:13.3140644+01:00"

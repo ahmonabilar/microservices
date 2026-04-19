@@ -49,7 +49,11 @@ builder.Services.AddHttpClient("Identity")
 // Configure HttpClient for the gateway service
 builder.Services.AddHttpClient<ICustomerService, CustomerService>(client =>
 {
-    client.BaseAddress = new Uri("https://localhost:7062");
+    var gatewayUrl = builder.Configuration["Gateway:Url"] ?? "https://localhost:7062";
+    client.BaseAddress = new Uri(gatewayUrl);
+}).ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
+{
+    ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
 });
 
 var app = builder.Build();

@@ -1,0 +1,11 @@
+apiVersion: v2
+name: gateway
+description: A Helm chart for deploying the Blazor App Gateway microservice to Minikube
+type: application
+version: 0.1.0
+appVersion: "1.0.0"
+keywords:
+  - gateway
+  - blazorapp
+  - microservice
+  - minikube

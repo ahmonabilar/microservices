@@ -18,12 +18,13 @@ builder
     .Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
-        options.Authority = "https://microservices.identity.local";
+        options.Authority = builder.Configuration["Identity:Authority"] ?? "https://microservices.identity.local";
         options.RequireHttpsMetadata = false;
         options.TokenValidationParameters =
             new Microsoft.IdentityModel.Tokens.TokenValidationParameters
             {
                 ValidateAudience = false,
+                ValidateIssuer = false,
             };
         options.BackchannelHttpHandler = new HttpClientHandler
         {
@@ -42,13 +43,16 @@ builder.Services.AddMassTransit(conf =>
     conf.UsingRabbitMq(
         (ctx, cfg) =>
         {
+            var rabbitHost = builder.Configuration["RabbitMQ:Host"] ?? "localhost";
+            var rabbitUser = builder.Configuration["RabbitMQ:Username"] ?? "user";
+            var rabbitPass = builder.Configuration["RabbitMQ:Password"] ?? "password";
             cfg.Host(
-                "localhost",
+                rabbitHost,
                 "/",
                 h =>
                 {
-                    h.Username("user");
-                    h.Password("password");
+                    h.Username(rabbitUser);
+                    h.Password(rabbitPass);
                 }
             );
         }

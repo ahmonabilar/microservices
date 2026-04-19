@@ -22,3 +22,6 @@ dependencies:
   - name: identity
     version: 0.1.0
     repository: "file://charts/identity"
+  - name: gateway
+    version: 0.1.0
+    repository: "file://charts/gateway"

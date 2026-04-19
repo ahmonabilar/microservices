@@ -8,5 +8,8 @@ dependencies:
 - name: sales
   repository: file://charts/sales
   version: 0.1.0
-digest: sha256:b37a5ce4dcd405b1cf20e11f3b809a19689c960fa1dc7c3ff9e2a6b0372542e4
-generated: "2026-04-18T21:54:27.2368739+01:00"
+- name: identity
+  repository: file://charts/identity
+  version: 0.1.0
+digest: sha256:6b70907fe1141a18301f4b892d8d118e2b6a9062a23ee413cdff2e52899f350f
+generated: "2026-04-19T13:35:38.7615259+01:00"

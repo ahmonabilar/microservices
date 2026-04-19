@@ -25,7 +25,6 @@ Username: Info@rocksolidknowledge.com
 Password: Password123!
 
 
-
 #########################################
 DEPLOY SALES
 #########################################
@@ -42,3 +41,39 @@ helm upgrade --install microservices helm --create-namespace --namespace microse
 
 # After the image is built, delete the failing pod so it gets recreated with the new image:
 kubectl delete pod -l app=sales -n microservices
+
+
+################################
+DEPLOY IDENTITY
+#################################
+#Enable the NGINX ingress addon:
+minikube addons enable ingress
+
+#Create the TLS secret:
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout tls.key -out tls.crt -subj "/CN=microservices.identity.local" -addext "subjectAltName=DNS:microservices.identity.local"
+kubectl create secret tls identity-tls --cert=tls.crt --key=tls.key -n microservices
+
+#Run minikube tunnel to expose the ingress on localhost
+minikube tunnel
+
+
+***************************
+# Point Docker to Minikube's daemon
+& minikube -p abilar docker-env | Invoke-Expression
+
+# Build from repo root
+cd C:\Projects\microservices
+docker build -t identity:latest -f services/identity/src/microservices.identity.OpenIddict/Dockerfile .
+
+# Enable ingress addon (once)
+minikube addons enable ingress -p abilar
+
+# Deploy
+helm dependency update helm
+helm upgrade --install microservices helm --create-namespace --namespace microservices
+
+# If pod is stuck, delete it to recreate with new image
+kubectl delete pod -l app=identity -n microservices
+
+# Start tunnel for ingress access (keep running)
+minikube tunnel -p abilar

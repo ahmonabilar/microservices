@@ -19,3 +19,6 @@ dependencies:
   - name: sales
     version: 0.1.0
     repository: "file://charts/sales"
+  - name: identity
+    version: 0.1.0
+    repository: "file://charts/identity"

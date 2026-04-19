@@ -1,27 +1,33 @@
 using blazorapp.gateway.Connectors;
 using blazorapp.gateway.Services;
 using MassTransit;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using microservices.shared.Extensions;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
+
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
 // Configure JWT Bearer authentication
-builder.Services
-    .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+builder
+    .Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
-        options.Authority = "https://localhost:5003";
+        options.Authority = "https://microservices.identity.local";
         options.RequireHttpsMetadata = false;
-        options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+        options.TokenValidationParameters =
+            new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+            {
+                ValidateAudience = false,
+            };
+        options.BackchannelHttpHandler = new HttpClientHandler
         {
-            ValidateAudience = false,
+            ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
         };
     });
 builder.Services.AddAuthorization();
@@ -33,14 +39,20 @@ builder.Services.AddScoped<ICustomerService, CustomerService>();
 
 builder.Services.AddMassTransit(conf =>
 {
-    conf.UsingRabbitMq((ctx, cfg) =>
-    {
-        cfg.Host("localhost", "/", h =>
+    conf.UsingRabbitMq(
+        (ctx, cfg) =>
         {
-            h.Username("user");
-            h.Password("password");
-        });
-    });
+            cfg.Host(
+                "localhost",
+                "/",
+                h =>
+                {
+                    h.Username("user");
+                    h.Password("password");
+                }
+            );
+        }
+    );
 });
 
 var app = builder.Build();

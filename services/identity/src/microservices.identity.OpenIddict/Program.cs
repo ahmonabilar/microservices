@@ -28,19 +28,13 @@ using (var scope = app.Services.CreateScope())
         {
             ClientId = "identity_client",
 
-            ConsentType = OpenIddictConstants.ConsentTypes.Explicit,
+            //ConsentType = OpenIddictConstants.ConsentTypes.Explicit,
 
             DisplayName = "Identity Client App",
 
-            RedirectUris =
-            {
-                new Uri("https://localhost:5002/signin-oidc"),
-            },
+            RedirectUris = { new Uri("https://localhost:5002/signin-oidc") },
 
-            PostLogoutRedirectUris =
-            {
-                new Uri("https://localhost:5002/signout-callback-oidc"),
-            },
+            PostLogoutRedirectUris = { new Uri("https://localhost:5002/signout-callback-oidc") },
 
             Permissions =
             {
@@ -60,10 +54,7 @@ using (var scope = app.Services.CreateScope())
                 OpenIddictConstants.Permissions.Prefixes.Scope + "api",
             },
 
-            Requirements =
-            {
-                OpenIddictConstants.Requirements.Features.ProofKeyForCodeExchange,
-            },
+            Requirements = { OpenIddictConstants.Requirements.Features.ProofKeyForCodeExchange },
         }
     );
 
@@ -79,19 +70,13 @@ using (var scope = app.Services.CreateScope())
         {
             ClientId = "blazorapp_client",
 
-            ConsentType = OpenIddictConstants.ConsentTypes.Explicit,
+            //ConsentType = OpenIddictConstants.ConsentTypes.Explicit,
 
             DisplayName = "Blazor App",
 
-            RedirectUris =
-            {
-                new Uri("https://localhost:7219/signin-oidc"),
-            },
+            RedirectUris = { new Uri("https://localhost:7219/signin-oidc") },
 
-            PostLogoutRedirectUris =
-            {
-                new Uri("https://localhost:7219/signout-callback-oidc"),
-            },
+            PostLogoutRedirectUris = { new Uri("https://localhost:7219/signout-callback-oidc") },
 
             Permissions =
             {
@@ -111,10 +96,7 @@ using (var scope = app.Services.CreateScope())
                 OpenIddictConstants.Permissions.Prefixes.Scope + "api",
             },
 
-            Requirements =
-            {
-                OpenIddictConstants.Requirements.Features.ProofKeyForCodeExchange,
-            },
+            Requirements = { OpenIddictConstants.Requirements.Features.ProofKeyForCodeExchange },
         }
     );
 

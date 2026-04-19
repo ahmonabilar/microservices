@@ -10,8 +10,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents().AddInteractiveServerComponents();
 
 // Configure authentication
-builder.Services
-    .AddAuthentication(options =>
+builder
+    .Services.AddAuthentication(options =>
     {
         options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
         options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
@@ -19,7 +19,7 @@ builder.Services
     .AddCookie()
     .AddOpenIdConnect(options =>
     {
-        options.Authority = "https://localhost:5003";
+        options.Authority = "https://microservices.identity.local";
         options.ClientId = "blazorapp_client";
         options.ResponseType = "code";
         options.SaveTokens = true;
@@ -28,12 +28,23 @@ builder.Services
         options.RequireHttpsMetadata = false;
         options.Scope.Add("api");
         options.Scope.Add("offline_access");
+        options.BackchannelHttpHandler = new HttpClientHandler
+        {
+            ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+        };
     });
 
 builder.Services.AddAuthorization();
 builder.Services.AddCascadingAuthenticationState();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<TokenProvider>();
+
+// Configure named HttpClient for identity token refresh (trust self-signed cert)
+builder.Services.AddHttpClient("Identity")
+    .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
+    {
+        ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+    });
 
 // Configure HttpClient for the gateway service
 builder.Services.AddHttpClient<ICustomerService, CustomerService>(client =>
@@ -57,22 +68,24 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 // Initialize TokenProvider from authentication cookie on each request
-app.Use(async (context, next) =>
-{
-    if (context.User.Identity?.IsAuthenticated == true)
+app.Use(
+    async (context, next) =>
     {
-        var tokenProvider = context.RequestServices.GetRequiredService<TokenProvider>();
-        var accessToken = await context.GetTokenAsync("access_token");
-        var refreshToken = await context.GetTokenAsync("refresh_token");
-        var expiresAtStr = await context.GetTokenAsync("expires_at");
-        var expiresAt = DateTimeOffset.TryParse(expiresAtStr, out var exp)
-            ? exp
-            : DateTimeOffset.MinValue;
+        if (context.User.Identity?.IsAuthenticated == true)
+        {
+            var tokenProvider = context.RequestServices.GetRequiredService<TokenProvider>();
+            var accessToken = await context.GetTokenAsync("access_token");
+            var refreshToken = await context.GetTokenAsync("refresh_token");
+            var expiresAtStr = await context.GetTokenAsync("expires_at");
+            var expiresAt = DateTimeOffset.TryParse(expiresAtStr, out var exp)
+                ? exp
+                : DateTimeOffset.MinValue;
 
-        tokenProvider.Initialize(accessToken, refreshToken, expiresAt);
+            tokenProvider.Initialize(accessToken, refreshToken, expiresAt);
+        }
+        await next(context);
     }
-    await next(context);
-});
+);
 
 app.UseAntiforgery();
 

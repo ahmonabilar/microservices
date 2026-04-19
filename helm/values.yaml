@@ -30,3 +30,18 @@ sales:
     type: ClusterIP
     port: 80
     targetPort: 8080
+
+identity:
+  enabled: true
+  image:
+    repository: identity
+    tag: latest
+  service:
+    type: ClusterIP
+    port: 443
+    targetPort: 8080
+  ingress:
+    enabled: true
+    host: microservices.identity.local
+    tls:
+      secretName: identity-tls

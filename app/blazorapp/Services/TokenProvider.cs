@@ -7,16 +7,18 @@ public class TokenProvider
 {
     private readonly IHttpClientFactory _httpClientFactory;
     private readonly ILogger<TokenProvider> _logger;
+    private readonly IConfiguration _configuration;
     private readonly SemaphoreSlim _semaphore = new(1, 1);
 
     private string? _accessToken;
     private string? _refreshToken;
     private DateTimeOffset _expiresAt;
 
-    public TokenProvider(IHttpClientFactory httpClientFactory, ILogger<TokenProvider> logger)
+    public TokenProvider(IHttpClientFactory httpClientFactory, ILogger<TokenProvider> logger, IConfiguration configuration)
     {
         _httpClientFactory = httpClientFactory;
         _logger = logger;
+        _configuration = configuration;
     }
 
     public void Initialize(string? accessToken, string? refreshToken, DateTimeOffset expiresAt)
@@ -58,14 +60,15 @@ public class TokenProvider
     {
         _logger.LogInformation("Access token expired, refreshing using refresh token");
 
-        using var client = _httpClientFactory.CreateClient();
+        using var client = _httpClientFactory.CreateClient("Identity");
+        var authority = _configuration["Identity:Authority"] ?? "https://microservices.identity.local";
         var response = await client.PostAsync(
-            "https://localhost:5003/connect/token",
+            $"{authority.TrimEnd('/')}/connect/token",
             new FormUrlEncodedContent(
                 new Dictionary<string, string>
                 {
                     ["grant_type"] = "refresh_token",
-                    ["client_id"] = "web_client",
+                    ["client_id"] = "blazorapp_client",
                     ["refresh_token"] = _refreshToken!,
                 }
             )

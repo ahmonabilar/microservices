@@ -1,0 +1,33 @@
+replicaCount: 1
+
+image:
+  repository: identity
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 443
+  targetPort: 8080
+
+ingress:
+  enabled: true
+  host: microservices.identity.local
+  tls:
+    secretName: identity-tls
+
+resources:
+  requests:
+    cpu: 250m
+    memory: 256Mi
+  limits:
+    cpu: 500m
+    memory: 512Mi
+
+env:
+  ASPNETCORE_ENVIRONMENT: "Production"
+  ASPNETCORE_URLS: "http://+:8080"
+  ASPNETCORE_FORWARDEDHEADERS_ENABLED: "true"
+  OpenIddictConnectionString: "Server=sqlserver,1433;Database=AdventureWorksLT202\
+    2;User
+    ID=sa;Password=P@ssw0rd1234;TrustServerCertificate=true;Encrypt=true;"

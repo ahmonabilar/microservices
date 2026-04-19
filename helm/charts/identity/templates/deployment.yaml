@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "identity.fullname" . }}
+  labels:
+    app: {{ include "identity.fullname" . }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ include "identity.fullname" . }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "identity.fullname" . }}
+    spec:
+      containers:
+        - name: identity
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.service.targetPort }}
+              name: http
+          env:
+            - name: ASPNETCORE_ENVIRONMENT
+              value: "{{ .Values.env.ASPNETCORE_ENVIRONMENT }}"
+            - name: ASPNETCORE_URLS
+              value: "{{ .Values.env.ASPNETCORE_URLS }}"
+            - name: ASPNETCORE_FORWARDEDHEADERS_ENABLED
+              value: "{{ .Values.env.ASPNETCORE_FORWARDEDHEADERS_ENABLED }}"
+            - name: OpenIddictConnectionString
+              value: "{{ index .Values.env "OpenIddictConnectionString" }}"
+          readinessProbe:
+            httpGet:
+              path: /
+              port: {{ .Values.service.targetPort }}
+            initialDelaySeconds: 15
+            periodSeconds: 10
+            failureThreshold: 3
+          livenessProbe:
+            httpGet:
+              path: /
+              port: {{ .Values.service.targetPort }}
+            initialDelaySeconds: 30
+            periodSeconds: 15
+            failureThreshold: 5

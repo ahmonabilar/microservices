@@ -77,3 +77,9 @@ kubectl delete pod -l app=identity -n microservices
 
 # Start tunnel for ingress access (keep running)
 minikube tunnel -p abilar
+
+# STEPS to run
+- make deploy-all
+- make import-db
+- make publish-db
+- minikube tunnel -p abilar
